@@ -1,0 +1,55 @@
+.btn__activity {
+  display: inline-block;
+  margin: 15px 20px;
+  max-width: 25%;
+  position: relative;
+  text-align: center;
+  transition: -ms-transform 0.7s ease;
+  transition: -webkit-transform 0.7s ease;
+  transition: transform 0.7s ease;
+
+  @media (max-width: 769px) {
+    max-width: 35%;
+  }
+
+  @media (max-width: 415px) {
+    max-width: 55%;
+    margin: 15px 10px;
+  }
+
+  @media (max-width: 376px) {
+    margin: 15px 5px;
+  }
+}
+
+.btn__activity:hover {
+  -ms-transform: translateY(-10px);
+  -webkit-transform: translateY(-10px);
+  transform: translateY(-10px);
+}
+
+.btn-noStyle{
+  border: none;
+  background-color: transparent;
+  margin-bottom: 10px;
+  outline-style: none;
+}
+
+.content_center {
+  text-align: center;
+}
+
+.content_size {
+  max-width: 75%;
+  margin: auto;
+}
+
+.div_wanted-mails {
+  display: inline-block;
+}
+
+.p-wanted-mails {
+  font-size: 2rem;
+  font-weight: 200;
+  text-align: center;
+}

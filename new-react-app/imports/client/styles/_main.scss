@@ -1,0 +1,41 @@
+@import './wantedMails';
+@import './saveAction';
+
+@import './components/spinner';
+
+.btn_trash {
+  float: right;
+}
+
+.header_my-mails {
+  font-size: 2;
+  font-weight: 350;
+
+  margin-top: 4rem;
+  margin-left: 2rem;
+}
+
+.icon-dislike {
+  float: right;
+  font-size: 4rem;
+  font-weight: 400;
+  margin-right: 3rem;
+}
+
+.topNavBar {
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: 400;
+  color: white;
+
+  padding: 1rem 0;
+  margin: 0 !important;
+
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  // #EA5353
+  background-color: #005A99;
+  border-bottom: 1px solid #eeeaea;
+  z-index: 10;
+}

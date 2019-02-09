@@ -1,0 +1,1 @@
+{"version":3,"file":".Modal.scss","sourceRoot":".","sources":["./imports/ui/components/Modal/Modal.scss"],"sourcesContent":[".modal-01 {\r\n  pre {\r\n    color: #e83e8c;\r\n  }\r\n}\r\n"],"names":[],"mappings":"AAAA,AACE,SADO,CACP,GAAG,CAAC;EACF,KAAK,EAAE,OAAO,GACf"}

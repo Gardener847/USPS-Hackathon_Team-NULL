@@ -1,0 +1,60 @@
+{
+    "food": {
+        "american": [
+            "mcdonalds",
+            "burgerking",
+            "jackinthebox",
+            "wendys",
+            "dennys",
+            "ihop",
+            "carlsjr",
+            "steakandshake"
+        ],
+        "italian": [
+            "olivegarden",
+            "bucadibeppo"
+        ],
+        "mexican": [
+            "chipotle",
+            "chilis",
+            "tacobell"
+        ],
+        "japanese": [
+            "sarku"
+        ],
+        "chinese": [
+            "pandaexpress"
+        ],
+        "pizza": [
+            "papajohns",
+            "dominos",
+            "pizzahut",
+            "littlecaesars"        
+        ],
+        "coffee": [
+            "starbucks",
+            "peetscofee",
+            "dunkindonuts"
+        ]
+    },
+    "store": {
+        "supermarket": [
+            "safeway",
+            "target",
+            "costco",
+            "walmart"
+        ],
+        "departmentstore": [
+            "macys",
+            "nordstrom",
+            "saksfifthavenue",
+            "kohls",
+            "jcpenney",
+            "tjmaxx"
+        ],
+        "pharmacy": [
+            "walgreens",
+            "cvs"
+        ]
+    }
+}
