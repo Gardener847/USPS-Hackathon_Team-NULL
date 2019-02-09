@@ -1320,41 +1320,34 @@ module.link("meteor/meteor", {
   }
 
 }, 2);
-let CategoryCollections;
-module.link("../api/category", {
-  CategoryCollections(v) {
-    CategoryCollections = v;
+let TestCollections;
+module.link("../api/test", {
+  TestCollections(v) {
+    TestCollections = v;
   }
 
 }, 3);
-let UserInfoCollections;
-module.link("../api/userFile", {
-  UserInfoCollections(v) {
-    UserInfoCollections = v;
-  }
-
-}, 4);
 let SaveAction;
 module.link("./SaveActions", {
   default(v) {
     SaveAction = v;
   }
 
-}, 5);
+}, 4);
 let TrashMail;
 module.link("./TrashMail", {
   default(v) {
     TrashMail = v;
   }
 
-}, 6);
+}, 5);
 let WantedMail;
 module.link("./WantedMails", {
   default(v) {
     WantedMail = v;
   }
 
-}, 7);
+}, 6);
 
 class Hello extends Component {
   constructor(props) {
@@ -1363,7 +1356,8 @@ class Hello extends Component {
       trash: [],
       preference: [],
       fromTrashToMayLike: [],
-      likeToTrash: []
+      likeToTrash: [],
+      myMail: []
     };
     this.restore = this.restore.bind(this);
     this.restoreTrash = this.restoreTrash.bind(this);
@@ -1371,6 +1365,45 @@ class Hello extends Component {
     this.addPreferences = this.addPreferences.bind(this);
     this.trash = this.trash.bind(this);
     this.placeToTrash = this.placeToTrash.bind(this);
+  }
+
+  componentDidMount() {
+    Meteor.subscribe('test', {
+      onReady: () => {
+        let collect = TestCollections.find().fetch();
+        collect = collect[0];
+        collect = collect.mail.ads;
+        let rend = [];
+
+        for (let i in collect) {
+          rend.push(React.createElement(WantedMail, {
+            key: collect[i].name,
+            logo: collect[i].logo,
+            brand: collect[i].name,
+            ad: collect[i].ad,
+            trigger: () => this.trash(collect[i].name, collect[i].logo)
+          }));
+        }
+
+        rend.push(React.createElement(WantedMail, {
+          logo: "./logos/McD.png",
+          brand: "McDonald's",
+          ad: "./ads/McD.jpeg",
+          trigger: () => this.trash("McDonald's", "./logos/McD.png")
+        }));
+        rend.push(React.createElement(WantedMail, {
+          logo: "./logos/BK.jpg",
+          brand: "Burger King",
+          ad: "./ads/BK.jpg",
+          trigger: () => this.trash("Burger King", "./logos/BK.jpg")
+        }));
+        this.setState({
+          myMail: rend
+        }, () => {
+          console.log("my mail state: ", this.state.myMail);
+        });
+      }
+    });
   }
 
   restore(brand, logo) {
@@ -1576,13 +1609,17 @@ class Hello extends Component {
       onSubmit: this.placeToTrash
     }, React.createElement("div", null, React.createElement("h1", {
       className: "header_my-mails"
-    }, "My Mails"), React.createElement("hr", null), React.createElement(WantedMail, {
+    }, "My Mails"), React.createElement("hr", null), this.state.myMail.map(inst => {
+      return inst;
+    }), React.createElement(WantedMail, {
       logo: "./logos/McD.png",
       brand: "McDonald's",
+      ad: "./ads/McD.jpeg",
       trigger: () => this.trash("McDonald's", "./logos/McD.png")
     }), React.createElement(WantedMail, {
       logo: "./logos/BK.jpg",
       brand: "Burger King",
+      ad: "./ads/BK.jpg",
       trigger: () => this.trash("Burger King", "./logos/BK.jpg")
     })), React.createElement(SaveAction, {
       action: "Delete"
@@ -1821,16 +1858,16 @@ class WantedMails extends Component {
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-}},"api":{"category.js":function(require,exports,module){
+}},"api":{"test.js":function(require,exports,module){
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                                     //
-// imports/api/category.js                                                                                             //
+// imports/api/test.js                                                                                                 //
 //                                                                                                                     //
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                                                                                                                        //
 module.export({
-  CategoryCollections: () => CategoryCollections
+  TestCollections: () => TestCollections
 });
 let Mongo;
 module.link("meteor/mongo", {
@@ -1846,45 +1883,11 @@ module.link("meteor/meteor", {
   }
 
 }, 1);
-const CategoryCollections = new Mongo.Collection('category');
+const TestCollections = new Mongo.Collection('test');
 
 if (Meteor.isServer) {
-  Meteor.publish('category', () => {
-    return CategoryCollections.find();
-  });
-}
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-},"userFile.js":function(require,exports,module){
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                     //
-// imports/api/userFile.js                                                                                             //
-//                                                                                                                     //
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                                                                                                                       //
-module.export({
-  UserInfoCollections: () => UserInfoCollections
-});
-let Mongo;
-module.link("meteor/mongo", {
-  Mongo(v) {
-    Mongo = v;
-  }
-
-}, 0);
-let Meteor;
-module.link("meteor/meteor", {
-  Meteor(v) {
-    Meteor = v;
-  }
-
-}, 1);
-const UserInfoCollections = new Mongo.Collection('userInfo');
-
-if (Meteor.isServer) {
-  Meteor.publish('userInfo', () => {
-    return UserInfoCollections.find();
+  Meteor.publish('test', () => {
+    return TestCollections.find();
   });
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
