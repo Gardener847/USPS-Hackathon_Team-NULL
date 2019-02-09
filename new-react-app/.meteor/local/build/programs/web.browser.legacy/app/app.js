@@ -1420,36 +1420,30 @@ module.link("meteor/meteor", {
     Meteor = v;
   }
 }, 2);
-var CategoryCollections;
-module.link("../api/category", {
-  CategoryCollections: function (v) {
-    CategoryCollections = v;
+var TestCollections;
+module.link("../api/test", {
+  TestCollections: function (v) {
+    TestCollections = v;
   }
 }, 3);
-var UserInfoCollections;
-module.link("../api/userFile", {
-  UserInfoCollections: function (v) {
-    UserInfoCollections = v;
-  }
-}, 4);
 var SaveAction;
 module.link("./SaveActions", {
   "default": function (v) {
     SaveAction = v;
   }
-}, 5);
+}, 4);
 var TrashMail;
 module.link("./TrashMail", {
   "default": function (v) {
     TrashMail = v;
   }
-}, 6);
+}, 5);
 var WantedMail;
 module.link("./WantedMails", {
   "default": function (v) {
     WantedMail = v;
   }
-}, 7);
+}, 6);
 
 var Hello =
 /*#__PURE__*/
@@ -1464,7 +1458,8 @@ function (_Component) {
       trash: [],
       preference: [],
       fromTrashToMayLike: [],
-      likeToTrash: []
+      likeToTrash: [],
+      myMail: []
     };
     _this.restore = _this.restore.bind((0, _assertThisInitialized2.default)((0, _assertThisInitialized2.default)(_this)));
     _this.restoreTrash = _this.restoreTrash.bind((0, _assertThisInitialized2.default)((0, _assertThisInitialized2.default)(_this)));
@@ -1476,6 +1471,62 @@ function (_Component) {
   }
 
   var _proto = Hello.prototype;
+
+  _proto.componentDidMount = function () {
+    function componentDidMount() {
+      var _this2 = this;
+
+      Meteor.subscribe('test', {
+        onReady: function () {
+          var collect = TestCollections.find().fetch();
+          collect = collect[0];
+          collect = collect.mail.ads;
+          var rend = [];
+
+          var _loop = function (i) {
+            rend.push(React.createElement(WantedMail, {
+              key: collect[i].name,
+              logo: collect[i].logo,
+              brand: collect[i].name,
+              ad: collect[i].ad,
+              trigger: function () {
+                return _this2.trash(collect[i].name, collect[i].logo);
+              }
+            }));
+          };
+
+          for (var i in meteorBabelHelpers.sanitizeForInObject(collect)) {
+            _loop(i);
+          }
+
+          rend.push(React.createElement(WantedMail, {
+            logo: "./logos/McD.png",
+            brand: "McDonald's",
+            ad: "./ads/McD.jpeg",
+            trigger: function () {
+              return _this2.trash("McDonald's", "./logos/McD.png");
+            }
+          }));
+          rend.push(React.createElement(WantedMail, {
+            logo: "./logos/BK.jpg",
+            brand: "Burger King",
+            ad: "./ads/BK.jpg",
+            trigger: function () {
+              return _this2.trash("Burger King", "./logos/BK.jpg");
+            }
+          }));
+
+          _this2.setState({
+            myMail: rend
+          }, function () {
+            console.log("my mail state: ", _this2.state.myMail);
+          });
+        }
+      });
+    }
+
+    return componentDidMount;
+  }();
 
   _proto.restore = function () {
     function restore(brand, logo) {
@@ -1506,14 +1557,14 @@ function (_Component) {
 
   _proto.restoreTrash = function () {
     function restoreTrash(event) {
-      var _this2 = this;
+      var _this3 = this;
 
       event.preventDefault();
       var arr = this.state.trash;
       console.log("inside restore trash: ", arr);
       var transfer = [];
 
-      var _loop = function (i) {
+      var _loop2 = function (i) {
         var str = arr[i].brand;
         console.log("item's brand is ", str);
         transfer.push(React.createElement(WantedMail, {
@@ -1521,14 +1572,14 @@ function (_Component) {
           logo: arr[i].logo,
           brand: arr[i].brand,
           trigger: function () {
-            return _this2.preference(str);
+            return _this3.preference(str);
           }
         }));
         document.getElementById(arr[i].brand).style.display = "none";
       };
 
       for (var i in meteorBabelHelpers.sanitizeForInObject(arr)) {
-        _loop(i);
+        _loop2(i);
       }
 
       arr = [];
@@ -1571,7 +1622,7 @@ function (_Component) {
       console.log("inside add preferences");
       var arr = this.state.preference;
 
-      var _loop2 = function (i) {
+      var _loop3 = function (i) {
         document.getElementById(arr[i]).style.display = "none"; // ADD TO PREFERENCES IN DB
 
         Meteor.call('insertPreference', arr[i], function (error) {
@@ -1584,7 +1635,7 @@ function (_Component) {
       };
 
       for (var i in meteorBabelHelpers.sanitizeForInObject(arr)) {
-        _loop2(i);
+        _loop3(i);
       }
 
       arr = [];
@@ -1628,14 +1679,14 @@ function (_Component) {
 
   _proto.placeToTrash = function () {
     function placeToTrash(event) {
-      var _this3 = this;
+      var _this4 = this;
 
       event.preventDefault();
       console.log("inside place to trash");
       var arr = this.state.likeToTrash;
       var transfer = [];
 
-      var _loop3 = function (i) {
+      var _loop4 = function (i) {
         var str = arr[i];
         console.log("item's brand is ", str);
         transfer.push(React.createElement(TrashMail, {
@@ -1643,14 +1694,14 @@ function (_Component) {
           logo: arr[i].logo,
           brand: arr[i].brand,
           trigger: function () {
-            return _this3.preference(str);
+            return _this4.preference(str);
           }
         }));
         document.getElementById(arr[i].brand).style.display = "none";
       };
 
       for (var i in meteorBabelHelpers.sanitizeForInObject(arr)) {
-        _loop3(i);
+        _loop4(i);
       }
 
       arr = [];
@@ -1665,7 +1716,7 @@ function (_Component) {
 
   _proto.render = function () {
     function render() {
-      var _this4 = this;
+      var _this5 = this;
 
       console.log("render...");
       var rend = null;
@@ -1715,13 +1766,13 @@ function (_Component) {
         logo: "./logos/appleB.jpg",
         brand: "Applebee's",
         addRestore: function () {
-          return _this4.restore("Applebee's", "./logos/appleB.jpg");
+          return _this5.restore("Applebee's", "./logos/appleB.jpg");
         }
       }), React.createElement(TrashMail, {
         logo: "./logos/jackNDBox.png",
         brand: "Jack In The Box",
         addRestore: function () {
-          return _this4.restore("Jack In The Box", "./logos/jackNDBox.png");
+          return _this5.restore("Jack In The Box", "./logos/jackNDBox.png");
         }
       }), rend1 ? this.props.addedTrash.map(function (inst) {
         return inst;
@@ -1731,17 +1782,21 @@ function (_Component) {
         onSubmit: this.placeToTrash
       }, React.createElement("div", null, React.createElement("h1", {
         className: "header_my-mails"
-      }, "My Mails"), React.createElement("hr", null), React.createElement(WantedMail, {
+      }, "My Mails"), React.createElement("hr", null), this.state.myMail.map(function (inst) {
+        return inst;
+      }), React.createElement(WantedMail, {
         logo: "./logos/McD.png",
         brand: "McDonald's",
+        ad: "./ads/McD.jpeg",
         trigger: function () {
-          return _this4.trash("McDonald's", "./logos/McD.png");
+          return _this5.trash("McDonald's", "./logos/McD.png");
         }
       }), React.createElement(WantedMail, {
         logo: "./logos/BK.jpg",
         brand: "Burger King",
+        ad: "./ads/BK.jpg",
         trigger: function () {
-          return _this4.trash("Burger King", "./logos/BK.jpg");
+          return _this5.trash("Burger King", "./logos/BK.jpg");
         }
       })), React.createElement(SaveAction, {
         action: "Delete"
@@ -1753,13 +1808,13 @@ function (_Component) {
         logo: "./logos/CarlsJr.jpg",
         brand: "Carl's Jr",
         trigger: function () {
-          return _this4.preference("Carl's Jr");
+          return _this5.preference("Carl's Jr");
         }
       }), React.createElement(WantedMail, {
         logo: "./logos/Wendys.jpg",
         brand: "Wendy's",
         trigger: function () {
-          return _this4.preference("Wendy's");
+          return _this5.preference("Wendy's");
         }
       }), rend ? this.props.addedItems.map(function (inst) {
         return inst;
@@ -2069,17 +2124,17 @@ function (_Component) {
 }(Component);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-}},"api":{"category.js":function(require,exports,module){
+}},"api":{"test.js":function(require,exports,module){
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                                     //
-// imports/api/category.js                                                                                             //
+// imports/api/test.js                                                                                                 //
 //                                                                                                                     //
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                                                                                                                        //
 module.export({
-  CategoryCollections: function () {
-    return CategoryCollections;
+  TestCollections: function () {
+    return TestCollections;
   }
 });
 var Mongo;
@@ -2094,45 +2149,11 @@ module.link("meteor/meteor", {
     Meteor = v;
   }
 }, 1);
-var CategoryCollections = new Mongo.Collection('category');
+var TestCollections = new Mongo.Collection('test');
 
 if (Meteor.isServer) {
-  Meteor.publish('category', function () {
-    return CategoryCollections.find();
-  });
-}
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-},"userFile.js":function(require,exports,module){
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                     //
-// imports/api/userFile.js                                                                                             //
-//                                                                                                                     //
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                                                                                                                       //
-module.export({
-  UserInfoCollections: function () {
-    return UserInfoCollections;
-  }
-});
-var Mongo;
-module.link("meteor/mongo", {
-  Mongo: function (v) {
-    Mongo = v;
-  }
-}, 0);
-var Meteor;
-module.link("meteor/meteor", {
-  Meteor: function (v) {
-    Meteor = v;
-  }
-}, 1);
-var UserInfoCollections = new Mongo.Collection('userInfo');
-
-if (Meteor.isServer) {
-  Meteor.publish('userInfo', function () {
-    return UserInfoCollections.find();
+  Meteor.publish('test', function () {
+    return TestCollections.find();
   });
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

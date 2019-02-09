@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import { Meteor } from 'meteor/meteor';
 
-import {CategoryCollections} from '../api/category';
-import {UserInfoCollections} from '../api/userFile';
+import {TestCollections} from '../api/test'
 
 // import Section from './Section';
 import SaveAction from './SaveActions';
@@ -17,7 +16,8 @@ class Hello extends Component {
       trash: [],
       preference: [],
       fromTrashToMayLike: [],
-      likeToTrash: []
+      likeToTrash: [],
+      myMail: []
     };
 
     this.restore = this.restore.bind(this);
@@ -26,6 +26,41 @@ class Hello extends Component {
     this.addPreferences = this.addPreferences.bind(this);
     this.trash = this.trash.bind(this);
     this.placeToTrash = this.placeToTrash.bind(this);
+  }
+  componentDidMount() {
+    Meteor.subscribe('test',
+      {
+        onReady: ()=> {
+          let collect = TestCollections.find().fetch();
+          collect = collect[0];
+          collect = collect.mail.ads;
+          let rend = [];
+          for (let i in collect) {
+            rend.push(
+              <WantedMail key={collect[i].name} logo={collect[i].logo} 
+              brand={collect[i].name}
+              ad={collect[i].ad}
+              trigger={() => this.trash(collect[i].name, collect[i].logo)}/>
+            )
+          }
+          rend.push(<WantedMail logo="./logos/McD.png" 
+          brand="McDonald's"
+          ad="./ads/McD.jpeg"
+          trigger={() => this.trash("McDonald's", "./logos/McD.png")}/>);
+          rend.push(<WantedMail logo="./logos/BK.jpg" 
+          brand="Burger King"
+          ad="./ads/BK.jpg"
+          trigger={() => this.trash("Burger King", "./logos/BK.jpg")}
+          />);
+
+          this.setState({
+            myMail: rend
+          }, () => {
+            console.log("my mail state: ", this.state.myMail);
+          })
+        }
+      }
+    );
   }
   restore(brand, logo) {
     let arr = this.state.trash;
@@ -208,11 +243,18 @@ class Hello extends Component {
               My Mails
             </h1>
             <hr></hr>
+            {
+              this.state.myMail.map(inst => {
+                return inst;
+              })
+            }
             <WantedMail logo="./logos/McD.png" 
             brand="McDonald's"
+            ad="./ads/McD.jpeg"
             trigger={() => this.trash("McDonald's", "./logos/McD.png")}/>
             <WantedMail logo="./logos/BK.jpg" 
             brand="Burger King"
+            ad="./ads/BK.jpg"
             trigger={() => this.trash("Burger King", "./logos/BK.jpg")}
             />
           </div>
@@ -225,6 +267,11 @@ class Hello extends Component {
               Items You May Like
             </h1>
             <hr></hr>
+            {/* {
+              this.state.myMail.map(inst => {
+                return inst;
+              })
+            } */}
             <WantedMail logo="./logos/CarlsJr.jpg" 
             brand="Carl's Jr"
             trigger={() => this.preference("Carl's Jr")}/>
