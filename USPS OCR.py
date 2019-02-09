@@ -3,7 +3,7 @@ import numpy as np
 import cv2 as cv
 import matplotlib.pyplot as plt
 import sys
-import pymongo
+# import pymongo
 
 def show_image(img):
     show_image('No Title', img)
@@ -14,7 +14,7 @@ def show_image(name, img):
     
 def get_address(addr):
     import re
-
+    print(addr)
     #looking for 1-5 numbers, space, lets say 20 chars for street name and suite, apt, etc, endl or comma
     #This is the first iteration of regex to isolate the address in a general form
     add = re.search('\n[-0-9]{1,6} {1,3}(.*)\n{1,4}[A-Z ]{1,20}, {1,3}[A-Z]{2} [0-9]{5}', addr.upper())[0]
@@ -63,10 +63,10 @@ def image_to_text(path):
 
     #Denoise Grayscale Image
     gray = cv.fastNlMeansDenoising(gray, None, 10, 7, 21)
-    show_image('Denoised',gray)
+    #show_image('Denoised',gray)
     #APPLY A BINARY THRESHOLD
     thr = cv.adaptiveThreshold(gray, 255, cv.ADAPTIVE_THRESH_MEAN_C, cv.THRESH_BINARY, 13, 2)
-    show_image('Thresh',thr)
+    #show_image('Thresh',thr)
 
     #CONVERT TEXT DATA TO STRING
     text = tess.image_to_string(thr, lang='eng')
@@ -90,8 +90,8 @@ def address_to_json(filename, addr, street, apt_suite, state, city, zipcode):
         json.dump(data,ofile)
 print(cv.__version__)
 
-path = "newBGAd.png"
-addr, street, apt_suite, state, city, zipcode = image_to_text(path)
+#path = "newBGAd.png"
+#addr, street, apt_suite, state, city, zipcode = image_to_text(path)
 
 #address_to_json("burgerking", addr, street, apt_suite, state, city, zipcode)
 
@@ -100,8 +100,8 @@ addr, street, apt_suite, state, city, zipcode = image_to_text(path)
 
 #address_to_json("mcdonalds", addr, street, apt_suite, state, city, zipcode)
 
-path = "sample-snail-mail-invoice.jpg"
-addr, street, apt_suite, state, city, zipcode = image_to_text(path)
+#path = "sample-snail-mail-invoice.jpg"
+#addr, street, apt_suite, state, city, zipcode = image_to_text(path)
 
 #address_to_json("regular", addr, street, apt_suite, state, city, zipcode)
 
