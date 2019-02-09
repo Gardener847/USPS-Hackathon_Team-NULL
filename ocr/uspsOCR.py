@@ -2,8 +2,10 @@ import pytesseract as tess
 import numpy as np
 import cv2 as cv
 import matplotlib.pyplot as plt
-import sysimport pymongo
+import sys
+import pymongo
 import os
+
 
 def show_image(img):
     show_image('No Title', img)
@@ -14,7 +16,7 @@ def show_image(name, img):
     
 def get_address(addr):
     import re
-    print(addr)
+
     #looking for 1-5 numbers, space, lets say 20 chars for street name and suite, apt, etc, endl or comma
     #This is the first iteration of regex to isolate the address in a general form
     add = re.search('\n[-0-9]{1,6} {1,3}(.*)\n{1,4}[A-Z ]{1,20}, {1,3}[A-Z]{2} [0-9]{5}', addr.upper())[0]
@@ -70,31 +72,50 @@ def image_to_text(path):
     thr = cv.adaptiveThreshold(gray, 255, cv.ADAPTIVE_THRESH_MEAN_C, cv.THRESH_BINARY, 13, 2)
     
     show_image('Thresh',thr)
+
     #CONVERT TEXT DATA TO STRING
     text = tess.image_to_string(thr, lang='eng')
     return get_address(text)
 
 def address_to_json(filename, addr, street, apt_suite, state, city, zipcode):
-    import json
-    data = {'user': {
-                'address': {
-                    'street': street,
-                    'apt':apt_suite,
-                    'city': city,
-                    'state': state,
-                    'zip5': zipcode,
-                    'zip4': ''
+    data = {"user": {
+                "address": {
+                    "street": street,
+                    "apt":apt_suite,
+                    "city": city,
+                    "state": state,
+                    "zip5": zipcode,
+                    "zip4": ""
                 },
-                'name': {
-                    'first': '',
-                    'last': ''
-                },
-            'mail': {
-                'ads': []
+                "name": {
+                    "first": "",
+                    "last": ""
                 }
+            },
+            "mail": {
+                "type": "",
+                "ads": [{
+                        "name": filename,
+                        "logo": "",
+                        "ad": ""
+                        }
+                ],
             }
-    }
+        }
     return data
+
+def update_ad(json, brandname, logourl, adurl):
+    json["mail"]["type"] = "ad"
+    json["mail"]["ads"][0]["name"] = brandname
+    json["mail"]["ads"][0]["logo"] = logourl
+    json["mail"]["ads"][0]["ad"] = adurl
+
+    return json
+
+def update_regular(json):
+    json["mail"]["type"] = "regular"
+
+    return json
 
 #---------------------------------------------------------
 
@@ -104,19 +125,27 @@ jsonContentList = []
 
 path = "newBGAd.png"
 addr, street, apt_suite, state, city, zipcode = image_to_text(path)
-
-jsonContentList.append(address_to_json("burgerking", addr, street, apt_suite, state, city, zipcode))
+burgerKing = address_to_json("burgerking", addr, street, apt_suite, state, city, zipcode)
+burgerKing = update_ad(burgerKing, "burgerking", 
+"https://pbs.twimg.com/profile_images/1093526161362223104/ibuCSwiI_400x400.jpg", 
+"https://github.com/shahkevaln/USPS-Hackathon_Team-NULL/blob/master/ocr/newBGAd.png")
+jsonContentList.append(burgerKing)
 
 path = "newMDAd.png"
 addr, street, apt_suite, state, city, zipcode = image_to_text(path)
+mcDonald = address_to_json("mcdonalds", addr, street, apt_suite, state, city, zipcode)
+mcDonald = update_ad(mcDonald, "mcdonalds",
+"https://diylogodesigns.com/wp-content/uploads/2016/04/Mcdonalds-logo-png-Transparent-768x538.png",
+"https://github.com/shahkevaln/USPS-Hackathon_Team-NULL/blob/master/ocr/newMDAd.png")
+jsonContentList.append(mcDonald)
 
-jsonContentList.append(address_to_json("mcdonalds", addr, street, apt_suite, state, city, zipcode))
+path = "sample-snail-mail-invoice.jpg"
+addr, street, apt_suite, state, city, zipcode = image_to_text(path)
+regularMail = address_to_json("regular", addr, street, apt_suite, state, city, zipcode)
+regularMail = update_regular(regularMail)
+jsonContentList.append(regularMail)
 
-#path = "sample-snail-mail-invoice.jpg"
-#addr, street, apt_suite, state, city, zipcode = image_to_text(path)
-
-jsonContentList.append(address_to_json("regular", addr, street, apt_suite, state, city, zipcode))
-
+print(jsonContentList)
 
 # create a mongo client for python
 mongoClient = pymongo.MongoClient('mongodb://127.0.0.1:3001/meteor', serverSelectionTimeoutMS=10000)
