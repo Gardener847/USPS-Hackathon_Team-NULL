@@ -16,7 +16,7 @@ const PublicNav = () => [
       <NavLink to="/signup">Signup</NavLink>
     </span>
   </li>,
-  <li id="logoutId" key="signup" className="nav-item nav-links_spacing">
+  <li id="logoutId" key="logout" className="nav-item nav-links_spacing">
     <span className="nav-link">
       <NavLink to="/login">Logout</NavLink>
     </span>

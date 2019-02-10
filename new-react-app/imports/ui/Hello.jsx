@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import { Meteor } from 'meteor/meteor';
 
-import {TestCollections} from '../api/test'
+import {TestCollections} from '../api/test';
+import { Tracker } from 'meteor/tracker';
 
 // import Section from './Section';
 import SaveAction from './SaveActions';
@@ -28,7 +29,7 @@ class Hello extends Component {
     this.placeToTrash = this.placeToTrash.bind(this);
   }
   componentDidMount() {
-    Meteor.subscribe('ocr',
+    Meteor.subscribe('test',
       {
         onReady: ()=> {
           let collect = TestCollections.find().fetch();
@@ -63,6 +64,28 @@ class Hello extends Component {
         }
       }
     );
+    Tracker.autorun(() => {
+      let objTest = TestCollections.find().fetch();
+      console.log("object: ", objTest);
+      if (objTest.length != 0) {
+        objTest = objTest.mail.ads;
+        console.log("object test: ", objTest);
+        let rend = [];
+        for (let i in collect) {
+          rend.push(
+            <WantedMail key={collect[i].name} logo={collect[i].logo} 
+            brand={collect[i].name}
+            ad={collect[i].ad}
+            trigger={() => this.trash(collect[i].name, collect[i].logo)}/>
+          )
+        }
+        this.setState({
+          myMail: rend
+        }, () => {
+          console.log("my mail state: ", this.state.myMail);
+        });
+      }
+    });
   }
   restore(brand, logo) {
     let arr = this.state.trash;
