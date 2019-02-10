@@ -686,12 +686,12 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/app/app.js?hash=b27d2a07a67e06a2e6db2b5d053a5f638f5e8bdb",
+      "url": "/app/app.js?hash=3dc8180b8a61d0cb785022d2cea6fd8babbeaa9e",
       "sourceMap": "app/app.js.map",
-      "sourceMapUrl": "/app/b27d2a07a67e06a2e6db2b5d053a5f638f5e8bdb.map",
-      "size": 389284,
-      "hash": "b27d2a07a67e06a2e6db2b5d053a5f638f5e8bdb",
-      "sri": "XCUOXYS0qyF9ONIT4Olfx2HlRDHs9+AqInOK3EjdPxOpwWyplvmXnOzwL3Elv3GwDdHl3LZhTHHMOrX/3avjbg=="
+      "sourceMapUrl": "/app/3dc8180b8a61d0cb785022d2cea6fd8babbeaa9e.map",
+      "size": 390591,
+      "hash": "3dc8180b8a61d0cb785022d2cea6fd8babbeaa9e",
+      "sri": "luBGbcYuc0XteATGPqtSZffODNl9OojXkWg+aWgPpUIZVngVfFOD4ukoL9gDyi2B/I1TdMsdW/Uy1qYeYCWuwg=="
     },
     {
       "path": "packages/service-configuration.js",
@@ -826,11 +826,11 @@
       "sri": "o6yqrDqYYax6S6I+UrkRXTm2dMtoW0VFT7S4Aymk9zcLXqfdi0HWMHmPilQIK2JBH9YzMnUiltv18rO5aruIdA=="
     },
     {
-      "path": "app/ads/BK.jpg",
+      "path": "app/ads/BigKing.jpg",
       "where": "client",
       "type": "asset",
       "cacheable": false,
-      "url": "/ads/BK.jpg",
+      "url": "/ads/BigKing.jpg",
       "size": 174517,
       "hash": "f401b40cbe67b98633a76e1862a19b81c8c99cf8",
       "sri": "Xh3IKC86mxU+eD9EjikQc1/tMZ+GVQND8fHfh0/ZgL9sKVIMXxueiwmYazkOgaHmS3cEP0wECcGoPr6seBmsNw=="
@@ -991,9 +991,9 @@
       "type": "asset",
       "cacheable": false,
       "url": "/imports/ui/pages/Login/Login.scss.map.json",
-      "size": 1831,
-      "hash": "6d892f142b5735ce3ca56fc3c6254ca8bbc9895b",
-      "sri": "Dpxqs10PyHjdsiSC1k+BwduwkTZ2c1Qva7wksSbS2EazLajbocBuvFkOUbsgod2a5hxHx6L54OHLJBVZXVDRaQ=="
+      "size": 1920,
+      "hash": "4bd193058cbe7b3c16f0b65d94ca20d93362256d",
+      "sri": "BKCTXLevfA64HWJv7XzTZB/CjNC1NvFf3Q/BAtCJAtFmkMHAMeDJoie+Obygz9K/sjK7Z2NaM0swHbfPmRyVPA=="
     },
     {
       "path": "app/imports/ui/pages/Not-Found/Not-Found.scss.map.json",
@@ -1034,6 +1034,16 @@
       "size": 545,
       "hash": "41ee7a2675e6b1ef39fceead81b29c4e523f753f",
       "sri": "8Nl0pYrrAGhGxWcFXs0FamOtF5k/BZyV2IHN0wvhFsjA47UgyzquZ1lvgEYfJcK3MIXq59S5W+b1gk1RtY2ylA=="
+    },
+    {
+      "path": "app/imports/ui/pages/Signup/Signup.scss.map.json",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/imports/ui/pages/Signup/Signup.scss.map.json",
+      "size": 1920,
+      "hash": "2b560cdc01477ae9c87576f71fab051d21faa50d",
+      "sri": "hEBdMlCn92CWVbWY6lO+zucBpI0oXcDcEexzSfyD93QreNa1FLN6BlCx2u5aQDcczRo7cJPF/gw9L13VtpODYg=="
     },
     {
       "path": "head.html",

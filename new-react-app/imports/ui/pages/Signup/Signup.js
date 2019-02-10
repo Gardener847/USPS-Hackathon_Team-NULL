@@ -7,7 +7,7 @@ import { NavLink } from 'react-router-dom';
 import Alert from '../../components/Alert';
 
 // import styles
-// import './Signup.scss';
+import './Signup.scss';
 
 class Signup extends React.Component {
   constructor(props) {
@@ -62,9 +62,9 @@ class Signup extends React.Component {
 
     const { errMsg } = this.state;
     return (
-      <section className="signup-page signup-spacing">
-        <div className="card mx-auto signup-spacing" style={{ maxWidth: '28rem' }}>
-          <div className="card-header signup-spacing">
+      <section className="signUp-page">
+        <div className="card mx-auto" style={{ maxWidth: '28rem' }}>
+          <div className="card-header">
             {/* <div className="brand">
               <div className="text-center">
                 <img
@@ -74,7 +74,7 @@ class Signup extends React.Component {
                 />
               </div>
             </div> */}
-            <div className="card-body signup-spacing">
+            <div className="card-body">
               <h4 className="card-title">Sign up</h4>
               <form onSubmit={this.handleSubmit}>
                 <div className="form-group">

@@ -54,7 +54,7 @@ class Login extends React.Component {
       <section className="login-page">
         <div className="card mx-auto" style={{ maxWidth: '28rem' }}>
           <div className="card-header">
-            <div className="brand">
+            {/* <div className="brand">
               <div className="text-center">
                 <img
                   className="rounded-circle"
@@ -62,7 +62,7 @@ class Login extends React.Component {
                   alt="logo"
                 />
               </div>
-            </div>
+            </div> */}
             <div className="card-body">
               <h4 className="card-title">Login</h4>
               <form onSubmit={this.handleSubmit}>

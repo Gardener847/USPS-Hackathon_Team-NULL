@@ -28,10 +28,10 @@ class Hello extends Component {
     this.placeToTrash = this.placeToTrash.bind(this);
   }
   componentDidMount() {
-    Meteor.subscribe('test',
+    Meteor.subscribe('ocr',
       {
         onReady: ()=> {
-          let collect = TestCollections.find().fetch();
+          let collect = ocr.find().fetch();
           collect = collect[0];
           collect = collect.mail.ads;
           let rend = [];
@@ -49,7 +49,7 @@ class Hello extends Component {
           trigger={() => this.trash("McDonald's", "./logos/McD.png")}/>);
           rend.push(<WantedMail logo="./logos/BK.jpg" 
           brand="Burger King"
-          ad="./ads/BK.jpg"
+          ad="./ads/BigKing.jpg"
           trigger={() => this.trash("Burger King", "./logos/BK.jpg")}
           />);
 
@@ -248,15 +248,15 @@ class Hello extends Component {
                 return inst;
               })
             }
-            <WantedMail logo="./logos/McD.png" 
+            {/* <WantedMail ident="McDs" logo="./logos/McD.png" 
             brand="McDonald's"
             ad="./ads/McD.jpeg"
             trigger={() => this.trash("McDonald's", "./logos/McD.png")}/>
-            <WantedMail logo="./logos/BK.jpg" 
+            <WantedMail ident="BKs" logo="./logos/BK.jpg" 
             brand="Burger King"
-            ad="./ads/BK.jpg"
+            ad="./ads/BigKing.jpg"
             trigger={() => this.trash("Burger King", "./logos/BK.jpg")}
-            />
+            /> */}
           </div>
           <SaveAction action="Delete"/>
         </form>
@@ -267,15 +267,10 @@ class Hello extends Component {
               Items You May Like
             </h1>
             <hr></hr>
-            {/* {
-              this.state.myMail.map(inst => {
-                return inst;
-              })
-            } */}
-            <WantedMail logo="./logos/CarlsJr.jpg" 
+            <WantedMail show="false" logo="./logos/CarlsJr.jpg" 
             brand="Carl's Jr"
             trigger={() => this.preference("Carl's Jr")}/>
-            <WantedMail logo="./logos/Wendys.jpg" 
+            <WantedMail show="false" logo="./logos/Wendys.jpg" 
             brand="Wendy's"
             trigger={() => this.preference("Wendy's")}
             />

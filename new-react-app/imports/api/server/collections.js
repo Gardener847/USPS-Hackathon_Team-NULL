@@ -14,8 +14,8 @@ export default Collections = () => {
     }
 
     //test case
-    if (TestCollections.find().fetch().length == 0) {
-			TestCollections.insert(JSON.parse(Assets.getText("mail1.json")));
-    }
+    // if (TestCollections.find().fetch().length == 0) {
+		// 	TestCollections.insert(JSON.parse(Assets.getText("mail1.json")));
+    // }
   }
 }

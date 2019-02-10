@@ -648,14 +648,6 @@ class Login extends React.Component {
     }, React.createElement("div", {
       className: "card-header"
     }, React.createElement("div", {
-      className: "brand"
-    }, React.createElement("div", {
-      className: "text-center"
-    }, React.createElement("img", {
-      className: "rounded-circle",
-      src: "https://via.placeholder.com/150x150",
-      alt: "logo"
-    }))), React.createElement("div", {
       className: "card-body"
     }, React.createElement("h4", {
       className: "card-title"
@@ -729,7 +721,7 @@ Login.propTypes = {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                                                                                                                        //
 module.exports = require("meteor/modules").addStyles(
-  ".login-page {\n  margin-top: 15px; }\n  .login-page .form-signin {\n    width: 100%;\n    max-width: 330px;\n    padding: 15px;\n    margin: 0 auto; }\n  .login-page .form-signin .checkbox {\n    font-weight: 400; }\n  .login-page .form-signin .form-control {\n    position: relative;\n    box-sizing: border-box;\n    height: auto;\n    padding: 10px;\n    font-size: 16px; }\n  .login-page .form-signin .form-control:focus {\n    z-index: 2; }\n  .login-page .form-signin input[type='email'] {\n    margin-bottom: -1px;\n    border-bottom-right-radius: 0;\n    border-bottom-left-radius: 0; }\n  .login-page .form-signin input[type='password'] {\n    margin-bottom: 10px;\n    border-top-left-radius: 0;\n    border-top-right-radius: 0; }\n  .login-page .spread-container {\n    display: flex;\n    justify-content: space-between; }\n\n//# sourceMappingURL=/imports/ui/pages/Login/Login.scss.map.json\n"
+  ".login-page {\n  margin-top: 15px;\n  padding-left: 35%;\n  padding-top: 10%; }\n  .login-page .form-signin {\n    width: 100%;\n    max-width: 330px;\n    padding: 15px;\n    margin: 0 auto; }\n  .login-page .form-signin .checkbox {\n    font-weight: 400; }\n  .login-page .form-signin .form-control {\n    position: relative;\n    box-sizing: border-box;\n    height: auto;\n    padding: 10px;\n    font-size: 16px; }\n  .login-page .form-signin .form-control:focus {\n    z-index: 2; }\n  .login-page .form-signin input[type='email'] {\n    margin-bottom: -1px;\n    border-bottom-right-radius: 0;\n    border-bottom-left-radius: 0; }\n  .login-page .form-signin input[type='password'] {\n    margin-bottom: 10px;\n    border-top-left-radius: 0;\n    border-top-right-radius: 0; }\n  .login-page .spread-container {\n    display: flex;\n    justify-content: space-between; }\n\n//# sourceMappingURL=/imports/ui/pages/Login/Login.scss.map.json\n"
 );
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1107,9 +1099,8 @@ module.link("../../components/Alert", {
   }
 
 }, 4);
+module.link("./Signup.scss");
 
-// import styles
-// import './Signup.scss';
 class Signup extends React.Component {
   constructor(props) {
     super(props);
@@ -1174,16 +1165,16 @@ class Signup extends React.Component {
       errMsg
     } = this.state;
     return React.createElement("section", {
-      className: "signup-page signup-spacing"
+      className: "signUp-page"
     }, React.createElement("div", {
-      className: "card mx-auto signup-spacing",
+      className: "card mx-auto",
       style: {
         maxWidth: '28rem'
       }
     }, React.createElement("div", {
-      className: "card-header signup-spacing"
+      className: "card-header"
     }, React.createElement("div", {
-      className: "card-body signup-spacing"
+      className: "card-body"
     }, React.createElement("h4", {
       className: "card-title"
     }, "Sign up"), React.createElement("form", {
@@ -1250,6 +1241,20 @@ Signup.propTypes = {
   }).isRequired
 };
 module.exportDefault(Signup);
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+},"Signup.scss":function(require,exports,module){
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                     //
+// imports/ui/pages/Signup/Signup.scss                                                                                 //
+//                                                                                                                     //
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                                       //
+module.exports = require("meteor/modules").addStyles(
+  ".signUp-page {\n  margin-top: 15px;\n  padding-left: 35%;\n  padding-top: 10%; }\n  .signUp-page .form-signin {\n    width: 100%;\n    max-width: 330px;\n    padding: 15px;\n    margin: 0 auto; }\n  .signUp-page .form-signin .checkbox {\n    font-weight: 400; }\n  .signUp-page .form-signin .form-control {\n    position: relative;\n    box-sizing: border-box;\n    height: auto;\n    padding: 10px;\n    font-size: 16px; }\n  .signUp-page .form-signin .form-control:focus {\n    z-index: 2; }\n  .signUp-page .form-signin input[type='email'] {\n    margin-bottom: -1px;\n    border-bottom-right-radius: 0;\n    border-bottom-left-radius: 0; }\n  .signUp-page .form-signin input[type='password'] {\n    margin-bottom: 10px;\n    border-top-left-radius: 0;\n    border-top-right-radius: 0; }\n  .signUp-page .spread-container {\n    display: flex;\n    justify-content: space-between; }\n\n//# sourceMappingURL=/imports/ui/pages/Signup/Signup.scss.map.json\n"
+);
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }}},"App.jsx":function(require,exports,module){
@@ -1368,9 +1373,9 @@ class Hello extends Component {
   }
 
   componentDidMount() {
-    Meteor.subscribe('test', {
+    Meteor.subscribe('ocr', {
       onReady: () => {
-        let collect = TestCollections.find().fetch();
+        let collect = ocr.find().fetch();
         collect = collect[0];
         collect = collect.mail.ads;
         let rend = [];
@@ -1394,7 +1399,7 @@ class Hello extends Component {
         rend.push(React.createElement(WantedMail, {
           logo: "./logos/BK.jpg",
           brand: "Burger King",
-          ad: "./ads/BK.jpg",
+          ad: "./ads/BigKing.jpg",
           trigger: () => this.trash("Burger King", "./logos/BK.jpg")
         }));
         this.setState({
@@ -1611,16 +1616,6 @@ class Hello extends Component {
       className: "header_my-mails"
     }, "My Mails"), React.createElement("hr", null), this.state.myMail.map(inst => {
       return inst;
-    }), React.createElement(WantedMail, {
-      logo: "./logos/McD.png",
-      brand: "McDonald's",
-      ad: "./ads/McD.jpeg",
-      trigger: () => this.trash("McDonald's", "./logos/McD.png")
-    }), React.createElement(WantedMail, {
-      logo: "./logos/BK.jpg",
-      brand: "Burger King",
-      ad: "./ads/BK.jpg",
-      trigger: () => this.trash("Burger King", "./logos/BK.jpg")
     })), React.createElement(SaveAction, {
       action: "Delete"
     })), React.createElement("form", {
@@ -1628,10 +1623,12 @@ class Hello extends Component {
     }, React.createElement("div", null, React.createElement("h1", {
       className: "header_my-mails"
     }, "Items You May Like"), React.createElement("hr", null), React.createElement(WantedMail, {
+      show: "false",
       logo: "./logos/CarlsJr.jpg",
       brand: "Carl's Jr",
       trigger: () => this.preference("Carl's Jr")
     }), React.createElement(WantedMail, {
+      show: "false",
       logo: "./logos/Wendys.jpg",
       brand: "Wendy's",
       trigger: () => this.preference("Wendy's")
@@ -1807,6 +1804,39 @@ module.link("../plugins/modal");
 
 class WantedMails extends Component {
   render() {
+    let rend = null;
+
+    if (!this.props.show) {
+      rend = React.createElement("div", {
+        className: "modal fade",
+        id: "".concat(this.props.ident),
+        tabIndex: "-1",
+        role: "dialog",
+        "aria-labelledby": "exampleModalCenterTitle",
+        "aria-hidden": "true"
+      }, React.createElement("div", {
+        className: "modal-dialog modal-dialog-centered",
+        role: "document"
+      }, React.createElement("div", {
+        className: "modal-content content_size"
+      }, React.createElement("div", {
+        className: "modal-header"
+      }, React.createElement("button", {
+        type: "button",
+        className: "close",
+        "data-dismiss": "modal",
+        "aria-label": "Close"
+      }, React.createElement("span", {
+        "aria-hidden": "true"
+      }, "\xD7"))), React.createElement("div", {
+        className: "modal-body content_center"
+      }, React.createElement("img", {
+        src: this.props.ad,
+        width: "350",
+        height: "500"
+      })))));
+    }
+
     return React.createElement("div", {
       id: this.props.brand,
       className: "div_wanted-mails"
@@ -1814,39 +1844,12 @@ class WantedMails extends Component {
       className: "btn__activity btn-noStyle",
       type: "button",
       "data-toggle": "modal",
-      "data-target": "#exampleModalCenter"
+      "data-target": "#".concat(this.props.ident)
     }, React.createElement("img", {
       src: this.props.logo,
       width: "140",
       height: "140"
-    })), React.createElement("div", {
-      className: "modal fade",
-      id: "exampleModalCenter",
-      tabIndex: "-1",
-      role: "dialog",
-      "aria-labelledby": "exampleModalCenterTitle",
-      "aria-hidden": "true"
-    }, React.createElement("div", {
-      className: "modal-dialog modal-dialog-centered",
-      role: "document"
-    }, React.createElement("div", {
-      className: "modal-content content_size"
-    }, React.createElement("div", {
-      className: "modal-header"
-    }, React.createElement("button", {
-      type: "button",
-      className: "close",
-      "data-dismiss": "modal",
-      "aria-label": "Close"
-    }, React.createElement("span", {
-      "aria-hidden": "true"
-    }, "\xD7"))), React.createElement("div", {
-      className: "modal-body content_center"
-    }, React.createElement("img", {
-      src: this.props.ad,
-      width: "350",
-      height: "500"
-    })))))), React.createElement("p", {
+    })), rend), React.createElement("p", {
       className: "p-wanted-mails"
     }, React.createElement("input", {
       type: "checkbox",
