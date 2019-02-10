@@ -1483,9 +1483,11 @@ function (_Component) {
 
       Meteor.subscribe('ocr', {
         onReady: function () {
-          var collect = ocr.find().fetch();
+          var collect = TestCollections.find().fetch();
           collect = collect[0];
+          console.log("initial extract collection: ", collect);
           collect = collect.mail.ads;
+          console.log("just ads: ", collect);
           var rend = [];
 
           var _loop = function (i) {

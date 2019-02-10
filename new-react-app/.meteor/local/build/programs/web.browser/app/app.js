@@ -1375,9 +1375,11 @@ class Hello extends Component {
   componentDidMount() {
     Meteor.subscribe('ocr', {
       onReady: () => {
-        let collect = ocr.find().fetch();
+        let collect = TestCollections.find().fetch();
         collect = collect[0];
+        console.log("initial extract collection: ", collect);
         collect = collect.mail.ads;
+        console.log("just ads: ", collect);
         let rend = [];
 
         for (let i in collect) {
