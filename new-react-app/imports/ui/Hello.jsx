@@ -64,6 +64,7 @@ class Hello extends Component {
         }
       }
     );
+    /*
     Tracker.autorun(() => {
       let objTest = TestCollections.find().fetch();
       console.log("object: ", objTest);
@@ -86,6 +87,7 @@ class Hello extends Component {
         });
       }
     });
+    */
   }
   restore(brand, logo) {
     let arr = this.state.trash;
